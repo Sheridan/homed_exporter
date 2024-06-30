@@ -27,11 +27,12 @@ jobs:
         sudo apt-get install -y \
           build-essential \
           cmake \
-          libpaho-mqttpp3-dev \
+          libpaho-mqtt-dev \
+          libpaho-mqttpp-dev \
           libboost-all-dev \
           libjsoncpp-dev \
           dpkg-dev \
-          cpack
+          ubuntu-dev-tools
 
     # - name: Cache CMake
     #   uses: actions/cache@v2

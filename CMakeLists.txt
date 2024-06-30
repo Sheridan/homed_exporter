@@ -104,6 +104,6 @@ set(CPACK_PACKAGE_VERSION "0.8.0")
 set(CPACK_PACKAGE_CONTACT "Gorlov Maxim <sheridan@babylo-five.ru>")
 set(CPACK_PACKAGE_DESCRIPTION "HomeD Exporter is a tool to export HOMEd Zigbee data metrics.")
 set(CPACK_PACKAGE_MAINTAINER "Gorlov Maxim <sheridan@babylo-five.ru>")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libpaho-mqttpp3, libboost-system, libjsoncpp1, libc6, libstdc++6")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libpaho-mqttpp3, libboost-system, libjsoncpp1")
 
 include(CPack)
