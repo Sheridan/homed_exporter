@@ -28,7 +28,7 @@ jobs:
         key: ${{ runner.os }}-cmake-${{ hashFiles('**/CMakeLists.txt') }}
 
     - name: Setup CMake
-      uses: actions/setup-cmake@v3
+      uses: jwlawson/actions-setup-cmake@v2.0.2
 
     - name: Install Dependencies
       run: |
