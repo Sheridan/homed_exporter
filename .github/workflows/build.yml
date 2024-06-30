@@ -9,8 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        arch: [amd64, aarch64]
-        # armhf mips
+        arch: [amd64, aarch64, armhf, mips]
 
     steps:
     - name: Checkout repository
@@ -30,6 +29,15 @@ jobs:
           ~/vcpkg_installed
         key: ${{ runner.os }}-build-cache-${{ hashFiles('**/CMakeLists.txt') }}
 
+    - name: Install Cross-Compilers
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          g++-aarch64-linux-gnu \
+          g++-arm-linux-gnueabihf \
+          g++-mips-linux-gnu \
+          gcc-11 g++-11
+
     - name: Install Dependencies
       run: |
         sudo apt-get update
@@ -42,16 +50,6 @@ jobs:
           libjsoncpp-dev \
           dpkg-dev \
           ubuntu-dev-tools
-
-    - name: Install Cross-Compilers
-      if: matrix.arch != 'amd64'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          g++-aarch64-linux-gnu \
-          g++-arm-linux-gnueabihf \
-          g++-mips-linux-gnu \
-          gcc-11 g++-11
 
     - name: Set Environment Variables
       run: |

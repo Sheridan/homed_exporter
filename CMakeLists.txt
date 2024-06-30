@@ -10,6 +10,7 @@ find_package(Boost 1.74 REQUIRED COMPONENTS system)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSONCPP REQUIRED jsoncpp)
+# pkg_check_modules(PahoMqttCpp REQUIRED paho-mqttpp)
 
 option(CMAKE_BUILD_TYPE "Build type" Release)
 
