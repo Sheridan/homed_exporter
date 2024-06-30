@@ -26,7 +26,7 @@ jobs:
         platforms: ${{ matrix.arch }}
 
     - name: Setup GCC
-      uses: Dup4/actions-setup-gcc@v1
+      uses: johelegp/gcc-snapshot@v1
 
     - name: Install Dependencies
       run: |
