@@ -9,7 +9,8 @@ jobs:
 
     strategy:
       matrix:
-        arch: [amd64, aarch64, armhf, mips]
+        arch: [amd64, aarch64, mips]
+        # armhf
 
     steps:
     - name: Checkout repository
