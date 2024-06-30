@@ -1,0 +1,67 @@
+# .github/workflows/build.yml
+name: Build and Package
+
+on: [push, pull_request]
+
+jobs:
+  build-and-package:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        arch: [amd64, aarch64, armhf, mips]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Setup Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Cache CMake
+      uses: actions/cache@v2
+      with:
+        path: /root/.cache/cmake
+        key: ${{ runner.os }}-cmake-${{ hashFiles('**/CMakeLists.txt') }}
+
+    - name: Cache vcpkg
+      uses: actions/cache@v2
+      with:
+        path: /root/.cache/vcpkg
+        key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json') }}
+
+    - name: Setup CMake
+      uses: lukka/get-cmake@v3
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential \
+          cmake \
+          libpaho-mqttpp3-dev \
+          libboost-all-dev \
+          libjsoncpp-dev \
+          dpkg-dev \
+          cpack
+
+    - name: Configure and Build
+      run: |
+        mkdir build
+        cd build
+        cmake -DCMAKE_TOOLCHAIN_FILE=../toolchains/${{ matrix.arch }}-gcc.cmake ..
+        cmake --build . --config Release
+
+    - name: Package DEB
+      run: |
+        cd build
+        cpack -G DEB
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: homed-exporter-${{ matrix.arch }}
+        path: build/*.deb

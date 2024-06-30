@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(PahoMqttCpp REQUIRED)
-find_package(Boost 1.84 REQUIRED COMPONENTS system filesystem)
+find_package(Boost 1.84 REQUIRED COMPONENTS system)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSONCPP REQUIRED jsoncpp)
@@ -96,6 +96,14 @@ add_executable(homed-exporter
 target_link_libraries(homed-exporter
     PahoMqttCpp::paho-mqttpp3
     jsoncpp
-    stdc++fs
     ${Boost_LIBRARIES}
   )
+
+set(CPACK_PACKAGE_NAME "homed_exporter")
+set(CPACK_PACKAGE_VERSION "0.8.0")
+set(CPACK_PACKAGE_CONTACT "Gorlov Maxim <sheridan@babylo-five.ru>")
+set(CPACK_PACKAGE_DESCRIPTION "HomeD Exporter is a tool to export HOMEd Zigbee data metrics.")
+set(CPACK_PACKAGE_MAINTAINER "Gorlov Maxim <sheridan@babylo-five.ru>")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libpaho-mqttpp3, libboost-system, libjsoncpp1, libc6, libstdc++6")
+
+include(CPack)
