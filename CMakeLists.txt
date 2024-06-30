@@ -11,12 +11,6 @@ find_package(Boost 1.74 REQUIRED COMPONENTS system)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSONCPP REQUIRED jsoncpp)
 
-# find_package(PkgConfig REQUIRED)
-# pkg_check_modules(PROMETHEUS_CPP REQUIRED prometheus-cpp)
-# pkg_check_modules(PAHO_MQTT_CPP REQUIRED PahoMqttCpp)
-# pkg_check_modules(JSONCPP REQUIRED jsoncpp)
-# pkg_check_modules(LOGGERLIB REQUIRED loggerlib)
-
 option(CMAKE_BUILD_TYPE "Build type" Release)
 
 message("Configuring as " ${CMAKE_BUILD_TYPE})
