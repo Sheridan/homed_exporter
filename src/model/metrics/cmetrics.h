@@ -20,7 +20,7 @@ public:
   void add(const std::string &name, const std::string &help, const std::string &type)
   {
     if(ensureMetricExists(name)) { return; }
-    m_metrics[name] = new CMetricBulk<T>(name, help, type);
+    m_metrics[name] = new CMetricBulk<T>(help, type);
   }
 
   void set      (const std::string &name, const TMetricLabels &labels, const CMetricValue &value);

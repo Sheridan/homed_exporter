@@ -74,7 +74,7 @@ std::string CMetrics::metrics()
   std::string result = "";
   for (const auto &pair : m_metrics)
   {
-    if(!pair.second->empty()) { result += pair.second->metrics(); };
+    if(!pair.second->empty()) { result += pair.second->metrics(pair.first); };
   }
   return result;
 }
@@ -84,7 +84,7 @@ std::string CMetrics::list()
   std::string result = "";
   for (const auto &pair : m_metrics)
   {
-    result += pair.second->info();
+    result += pair.second->info(pair.first);
   }
   return result;
 }

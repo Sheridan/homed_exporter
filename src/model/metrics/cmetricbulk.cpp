@@ -14,11 +14,9 @@ namespace metrics
 {
 
 template <typename TMetricType>
-CMetricBulk<TMetricType>::CMetricBulk(const std::string &name, const std::string &help, const std::string &type)
-  : m_name(name), m_help(help), m_type(type)
-{
-  HE_LOG_DBG("New metric: " << m_name);
-}
+CMetricBulk<TMetricType>::CMetricBulk(const std::string &help, const std::string &type)
+  : m_help(help), m_type(type)
+{}
 
 template <typename TMetricType>
 CMetricBulk<TMetricType>::~CMetricBulk()
@@ -73,9 +71,9 @@ void CMetricBulk<TMetricType>::clear()
 }
 
 template <typename TMetricType>
-std::string CMetricBulk<TMetricType>::metrics()
+std::string CMetricBulk<TMetricType>::metrics(const std::string &metricName)
 {
-  // HE_LOG_NFO << "CMetricBulk:metrics " << m_name << std::endl;
+  // HE_LOG_NFO << "CMetricBulk:metrics " << metricName << std::endl;
   std::string result = "";
   for (const auto &pair : m_metrics)
   {
@@ -126,23 +124,23 @@ std::string CMetricBulk<TMetricType>::metrics()
             }
           }
         }
-        result += std::format("{}{{{}}} {}\n", m_name, makeLabels(labels), metric.asMetric());
+        result += std::format("{}{{{}}} {}\n", metricName, makeLabels(labels), metric.asMetric());
       }
     }
   }
   clear();
   if(!result.empty())
   {
-    return std::format("# HELP {} {}\n# TYPE {} {}\n", m_name, m_help, m_name, m_type) + result;
+    return std::format("# HELP {} {}\n# TYPE {} {}\n", metricName, m_help, metricName, m_type) + result;
   }
   return he::utils::empty_string;
 }
 
 
 template<typename TMetricType>
-std::string CMetricBulk<TMetricType>::info()
+std::string CMetricBulk<TMetricType>::info(const std::string &metricName)
 {
-  return std::format("Metric name: {}; Metric type: {}; Metric help: {}\n", m_name, m_type, m_help);
+  return std::format("Metric name: {}; Metric type: {}; Metric help: {}\n", metricName, m_type, m_help);
 }
 
 template <typename TMetricType>
