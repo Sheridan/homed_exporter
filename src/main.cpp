@@ -2,12 +2,16 @@
 #include <iostream>
 #include "st.h"
 
+static const std::string_view version = "0.8.0";
 
 int main(int argc, char* argv[])
 {
-  HE_ST.cmdLine().addOption       <bool>("-v", "--verbose", "Verbose output"      , false);
-  HE_ST.cmdLine().addOption<std::string>("-c", "--config" , "Config file location", "/etc/homed-exporter.json");
+  HE_ST.cmdLine().addOption       <bool>("-v", "--verbose", "Verbose output"        , false);
+  HE_ST.cmdLine().addOption       <bool>("-V", "--version", "Print version and exit", false);
+  HE_ST.cmdLine().addOption<std::string>("-c", "--config" , "Config file location"  , "/etc/homed-exporter.json");
   if(!HE_ST.cmdLine().parse(argc, argv)) { return 1; };
+
+  if(HE_ST.cmdLine().option<bool>("version")) { std::cout << "homed_exporter version: " << version << std::endl; return 0; }
 
   HE_ST.config().load(HE_ST.cmdLine().option<std::string>("config"));
 
