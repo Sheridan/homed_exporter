@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(homed-exporter)
+project(homed_exporter)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -89,15 +89,17 @@ set(HE_SOURCES
 
 include_directories(src)
 
-add_executable(homed-exporter
+add_executable(homed_exporter
     ${HE_HEADERS}
     ${HE_SOURCES}
 )
-target_link_libraries(homed-exporter
+target_link_libraries(homed_exporter
     PahoMqttCpp::paho-mqttpp3
     jsoncpp
     ${Boost_LIBRARIES}
   )
+
+  install(TARGETS homed_exporter DESTINATION /usr/bin)
 
 set(CPACK_PACKAGE_NAME "homed_exporter")
 set(CPACK_PACKAGE_VERSION "0.8.0")
