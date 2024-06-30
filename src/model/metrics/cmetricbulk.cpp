@@ -3,7 +3,7 @@
 #include "model/device/cdevice.h"
 #include "utils/string.h"
 #include <jsoncpp/json/json.h>
-#include <format>
+// #include <format>
 #include "st.h"
 
 namespace he
@@ -124,14 +124,16 @@ std::string CMetricBulk<TMetricType>::metrics(const std::string &metricName)
             }
           }
         }
-        result += std::format("{}{{{}}} {}\n", metricName, makeLabels(labels), metric.asMetric());
+        // result += std::format("{}{{{}}} {}\n", metricName, makeLabels(labels), metric.asMetric());
+        result += metricName + "{" + makeLabels(labels) + "} " + metric.asMetric();
       }
     }
   }
   clear();
   if(!result.empty())
   {
-    return std::format("# HELP {} {}\n# TYPE {} {}\n", metricName, m_help, metricName, m_type) + result;
+    // return std::format("# HELP {} {}\n# TYPE {} {}\n", metricName, m_help, metricName, m_type) + result;
+    return "# HELP " + metricName + " " + m_help + "\n# TYPE " + metricName + " " + m_type + "\n" + result;
   }
   return he::utils::empty_string;
 }
@@ -140,7 +142,8 @@ std::string CMetricBulk<TMetricType>::metrics(const std::string &metricName)
 template<typename TMetricType>
 std::string CMetricBulk<TMetricType>::info(const std::string &metricName)
 {
-  return std::format("Metric name: {}; Metric type: {}; Metric help: {}\n", metricName, m_type, m_help);
+  // return std::format("Metric name: {}; Metric type: {}; Metric help: {}\n", metricName, m_type, m_help);
+  return "Metric name: " + metricName + "; Metric type: " + m_type + "; Metric help: " + m_help + "\n";
 }
 
 template <typename TMetricType>
@@ -149,7 +152,8 @@ std::string CMetricBulk<TMetricType>::makeLabels(const TMetricLabels &labels)
   std::string result = "";
   for(auto &pair : labels)
   {
-    result += std::format("{}=\"{}\",", pair.first, pair.second);
+    // result += std::format("{}=\"{}\",", pair.first, pair.second);
+    result += pair.first + "=\"" + pair.second + "\",";
   }
   return result.substr(0, result.size()-1);
 }

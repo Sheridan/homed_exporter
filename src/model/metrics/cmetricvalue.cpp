@@ -1,6 +1,6 @@
 #include "model/metrics/cmetricvalue.h"
 #include "cmetricvalue.h"
-#include <format>
+// #include <format>
 
 namespace he
 {
@@ -58,7 +58,8 @@ void CMetricValue::increment(const TMetricValue &v)
 
 std::string CMetricValue::asMetric()
 {
-  return std::format("{} {}", m_isNaN ? "NaN" : std::to_string(m_value), m_timestamp);
+  // return std::format("{} {}", m_isNaN ? "NaN" : std::to_string(m_value), m_timestamp);
+  return (m_isNaN ? "NaN" : std::to_string(m_value)) + " " + std::to_string(m_timestamp);
 }
 
 CMetricValue &CMetricValue::operator=(const CMetricValue &other)

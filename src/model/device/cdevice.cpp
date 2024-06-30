@@ -4,7 +4,7 @@
 #include "model/metrics/cmetricname.h"
 #include "defines/metrics.h"
 
-#include <format>
+// #include <format>
 namespace he
 {
 namespace model
@@ -58,12 +58,14 @@ std::string CDevice::metricHelpSensor(const std::string &itemName, const Json::V
 
 std::string CDevice::metricHelpNumber(const std::string &itemName, const Json::Value &data)
 {
-  return std::format("{}. borders: [{}:{}], step: {}, unit: {}",
-                     itemName,
-                     data["min"].asString(),
-                     data["max"].asString(),
-                     data.isMember("step") ? data["step"].asString() : "1",
-                     data["unit"].asString());
+  return itemName + ". borders: [" + data["min"].asString() + ":" + data["max"].asString() + "], step: " + (data.isMember("step") ? data["step"].asString() : "1") + ", unit: " + data["unit"].asString();
+
+  // return std::format("{}. borders: [{}:{}], step: {}, unit: {}",
+  //                    itemName,
+  //                    data["min"].asString(),
+  //                    data["max"].asString(),
+  //                    data.isMember("step") ? data["step"].asString() : "1",
+  //                    data["unit"].asString());
 }
 
 void CDevice::updateStatus(const he::mqtt::CTopic *topic, const Json::Value &data)
