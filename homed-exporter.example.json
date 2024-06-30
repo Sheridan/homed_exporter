@@ -1,0 +1,39 @@
+{
+  "mqtt":
+  {
+    "server": "host.domain.local",
+    "port": 1883,
+    "user": "login",
+    "password": "password",
+    "homed_root_topic": "homed"
+  },
+  "exporter":
+  {
+    "address": "ip address",
+    "port": 9111,
+    "labels":
+    {
+      "devices":
+      {
+        "Button_One":                   [{"location": "Кухня"},    {"title": "Кнопка"}]
+      },
+      "endpoints":
+      {
+        "LightRelay_Hall":    {
+                                "1": [{"endpoint_location": "Зал"},  {"endpoint_title": "Люстра"}],
+                                "2": [{"endpoint_location": "Зал"},  {"endpoint_title": "Ближний"}],
+                                "3": [{"endpoint_location": "Зал"},  {"endpoint_title": "Центр"}],
+                                "4": [{"endpoint_location": "Зал"},  {"endpoint_title": "Дальний"}]
+                              }
+
+      }
+    },
+    "ignores":
+    {
+      "devices": ["IR_0"],
+      "enpoints": {
+                   "Informer_One": ["2", "3", "4", "5", "6", "7", "8"]
+                  }
+    }
+  }
+}
