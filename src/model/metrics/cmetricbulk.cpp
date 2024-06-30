@@ -125,7 +125,7 @@ std::string CMetricBulk<TMetricType>::metrics(const std::string &metricName)
           }
         }
         // result += std::format("{}{{{}}} {}\n", metricName, makeLabels(labels), metric.asMetric());
-        result += metricName + "{" + makeLabels(labels) + "} " + metric.asMetric();
+        result += metricName + "{" + makeLabels(labels) + "} " + metric.asMetric() + "\n";
       }
     }
   }
