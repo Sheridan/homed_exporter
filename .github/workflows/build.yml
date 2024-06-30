@@ -21,11 +21,13 @@ jobs:
     - name: Setup Docker Buildx
       uses: docker/setup-buildx-action@v1
 
+    - name: Setup GCC
+      uses: Dup4/actions-setup-gcc@v1
+
     - name: Install Dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y \
-          gcc-12 \
           build-essential \
           cmake \
           libpaho-mqtt-dev \
@@ -35,12 +37,6 @@ jobs:
           dpkg-dev \
           ubuntu-dev-tools
 
-    # - name: Cache CMake
-    #   uses: actions/cache@v2
-    #   with:
-    #     path: /root/.cache/cmake
-    #     key: ${{ runner.os }}-cmake-${{ hashFiles('**/CMakeLists.txt') }}
-
     - name: Setup CMake
       uses: jwlawson/actions-setup-cmake@v2.0.2
 
@@ -48,8 +44,6 @@ jobs:
       run: |
         mkdir build
         cd build
-        export CC=gcc-12
-        export CXX=g++-12
         cmake  ..
         cmake --build . --config Release
 
