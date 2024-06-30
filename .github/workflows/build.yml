@@ -25,6 +25,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y \
+          gcc-12 \
           build-essential \
           cmake \
           libpaho-mqtt-dev \
@@ -47,6 +48,8 @@ jobs:
       run: |
         mkdir build
         cd build
+        export CC=gcc-12
+        export CXX=g++-12
         cmake  ..
         cmake --build . --config Release
 
