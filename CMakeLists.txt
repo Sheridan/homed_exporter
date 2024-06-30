@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(PahoMqttCpp REQUIRED)
-find_package(Boost 1.84 REQUIRED COMPONENTS system)
+find_package(Boost 1.74 REQUIRED COMPONENTS system)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSONCPP REQUIRED jsoncpp)
