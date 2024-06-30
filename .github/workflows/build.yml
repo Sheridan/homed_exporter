@@ -35,13 +35,12 @@ jobs:
         sudo apt-get install -y \
           build-essential \
           cmake \
-          libpaho-mqttpp3-dev \
-          libboost-system-dev \
-          libboost-filesystem-dev \
+          libpaho-mqtt-dev \
+          libpaho-mqttpp-dev \
+          libboost-all-dev \
           libjsoncpp-dev \
           dpkg-dev \
-          cpack \
-          gcc-11 g++-11
+          ubuntu-dev-tools
 
     - name: Install Cross-Compilers
       if: matrix.arch != 'amd64'
@@ -50,7 +49,8 @@ jobs:
         sudo apt-get install -y \
           g++-aarch64-linux-gnu \
           g++-arm-linux-gnueabihf \
-          g++-mips-linux-gnu
+          g++-mips-linux-gnu \
+          gcc-11 g++-11
 
     - name: Set Environment Variables
       run: |
