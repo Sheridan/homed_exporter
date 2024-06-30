@@ -48,7 +48,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake  ..
+        cmake -DCMAKE_TOOLCHAIN_FILE=../toolchains/${{ matrix.arch }}-gcc.cmake ..
         cmake --build . --config Release
 
     - name: Package DEB
