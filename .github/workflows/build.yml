@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        arch: [amd64, aarch64, armhf, mips]
+        arch: [amd64, aarch64]
 
     steps:
     - name: Checkout repository
@@ -27,14 +27,8 @@ jobs:
         path: /root/.cache/cmake
         key: ${{ runner.os }}-cmake-${{ hashFiles('**/CMakeLists.txt') }}
 
-    - name: Cache vcpkg
-      uses: actions/cache@v2
-      with:
-        path: /root/.cache/vcpkg
-        key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json') }}
-
     - name: Setup CMake
-      uses: lukka/get-cmake@v3
+      uses: actions/setup-cmake@v3
 
     - name: Install Dependencies
       run: |
