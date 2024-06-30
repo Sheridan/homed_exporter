@@ -21,15 +21,6 @@ jobs:
     - name: Setup Docker Buildx
       uses: docker/setup-buildx-action@v1
 
-    - name: Cache CMake
-      uses: actions/cache@v2
-      with:
-        path: /root/.cache/cmake
-        key: ${{ runner.os }}-cmake-${{ hashFiles('**/CMakeLists.txt') }}
-
-    - name: Setup CMake
-      uses: jwlawson/actions-setup-cmake@v2.0.2
-
     - name: Install Dependencies
       run: |
         sudo apt-get update
@@ -41,6 +32,15 @@ jobs:
           libjsoncpp-dev \
           dpkg-dev \
           cpack
+
+    # - name: Cache CMake
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: /root/.cache/cmake
+    #     key: ${{ runner.os }}-cmake-${{ hashFiles('**/CMakeLists.txt') }}
+
+    - name: Setup CMake
+      uses: jwlawson/actions-setup-cmake@v2.0.2
 
     - name: Configure and Build
       run: |
