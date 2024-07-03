@@ -53,12 +53,14 @@ std::string CDevice::metricHelpSensor(const std::string &itemName, const Json::V
   std::string result = itemName;
   if(data.isMember("class")) { result += ", class: " + data["class"].asString(); }
   if(data.isMember("state")) { result += ", state: " + data["state"].asString(); }
-  return result + ", unit: " + data["unit"].asString();
+  return result + ", unit: " + (data.isMember("unit") ? data["unit"].asString() : "number");
 }
 
 std::string CDevice::metricHelpNumber(const std::string &itemName, const Json::Value &data)
 {
-  return itemName + ". borders: [" + data["min"].asString() + ":" + data["max"].asString() + "], step: " + (data.isMember("step") ? data["step"].asString() : "1") + ", unit: " + data["unit"].asString();
+  return itemName + ". borders: [" + data["min"].asString() + ":" + data["max"].asString() + "],"
+                    " step: " + (data.isMember("step") ? data["step"].asString() : "1") + ","
+                    " unit: " + (data.isMember("unit") ? data["unit"].asString() : "number");
 
   // return std::format("{}. borders: [{}:{}], step: {}, unit: {}",
   //                    itemName,
@@ -141,19 +143,17 @@ void CDevice::updateExpose(const he::mqtt::CTopic *topic, const Json::Value &dat
                                                                       "gauge");
               continue;
             }
-            if(itemKeyType == "sensor"                        &&
-               data[key]["options"][itemKey].isMember("unit"))
+            if(itemKeyType == "sensor")
             {
               // HE_LOG_DBG(key << " sensor " << itemKey << " options: " << data[key]["options"][itemKey].toStyledString());
               HE_ST.metrics().add<he::model::metrics::CMetricPartial>(he::model::metrics::CMetricName::metricName(itemKey, he::mqtt::ETopic::tFd),
                                                                       metricHelpSensor(itemKey, data[key]["options"][itemKey]),
-                                                                      "gauge");
+                                                                      (data[key]["options"][itemKey].isMember("state") && data[key]["options"][itemKey]["state"].asString() == "total_increasing") ? "counter" : "gauge");
               continue;
             }
             if(itemKeyType == "number"                       &&
                data[key]["options"][itemKey].isMember("max") &&
-               data[key]["options"][itemKey].isMember("min") &&
-               data[key]["options"][itemKey].isMember("unit"))
+               data[key]["options"][itemKey].isMember("min"))
             {
               // HE_LOG_DBG(key << " sensor " << itemKey << " options: " << data[key]["options"][itemKey].toStyledString());
               HE_ST.metrics().add<he::model::metrics::CMetricPartial>(he::model::metrics::CMetricName::metricName(itemKey, he::mqtt::ETopic::tFd),
@@ -219,7 +219,20 @@ void CDevice::updateMain(const he::mqtt::CTopic *topic, const Json::Value &data,
     he::model::metrics::TMetricLabels labels = defaultLabels();
     if(!topic->deviceEndpoint().empty()) { labels["endpoint"] = topic->deviceEndpoint(); }
     he::model::metrics::CMetricValue value = HE_ST.metrics().isExposeEnumeration(key) ?  he::model::metrics::CMetricValue(HE_ST.metrics().exposeEnumerationIndex(key, data[key].asString())) :  he::model::metrics::CMetricValue(data[key]);
-    HE_ST.metrics().set(he::model::metrics::CMetricName::metricName(key, topic->topicType()), labels, value);
+    std::string metricName = he::model::metrics::CMetricName::metricName(key, topic->topicType());
+    switch(HE_ST.metrics().type(metricName))
+    {
+      case he::model::metrics::EMetricType::mtPartial:
+      case he::model::metrics::EMetricType::mtStatic:
+      {
+        HE_ST.metrics().set(metricName, labels, value);
+      } break;
+      case he::model::metrics::EMetricType::mtIncremental:
+      {
+        HE_ST.metrics().increment(metricName, labels, value.value());
+      } break;
+    }
+
   }
 }
 

@@ -70,6 +70,7 @@ CMetricValue &CMetricValue::operator=(const CMetricValue &other)
   m_timestamp = other.timestamp();
   return *this;
 }
+
 TMetricValue CMetricValue::stringToValue(const std::string &input)
 {
   if(input == "on"     || input == "off"   ) { return input == "on"     ? 1 : 0; }

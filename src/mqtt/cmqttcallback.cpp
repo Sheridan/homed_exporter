@@ -24,10 +24,21 @@ void CMqttCallback::message_arrived(::mqtt::const_message_ptr msg)
   if(payload->parse(msg->get_payload_str()))
   {
     CTopic *topic = new CTopic(msg->get_topic());
-    if(topic->topicType() != ETopic::tUnknown && topic->serviceType() == EService::sZigbee)
+    switch(topic->topicType())
     {
-      HE_LOG_VERBOSE("Incoming data from topic " << topic->topic());
-      HE_ST.homed().update(topic, payload->value());
+      case ETopic::tUnknown: break;
+      default:
+      {
+        switch(topic->serviceType())
+        {
+          case EService::sZigbee:
+          // case EService::sCustom:
+          {
+            HE_LOG_VERBOSE("Incoming data from topic " << topic->topic());
+            HE_ST.homed().update(topic, payload->value());
+          } break;
+        }
+      } break;
     }
     delete topic;
   }

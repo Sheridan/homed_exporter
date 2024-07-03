@@ -25,7 +25,7 @@ CMetrics:: CMetrics()
 
   add<he::model::metrics::CMetricStatic> (he::model::metrics::CMetricName::metricName("info")   , "Device info in tags", "gauge");
 
-  add<he::model::metrics::CMetricIncremental>(he::model::metrics::CMetricName::metricName("incoming_device_updates"), "Device updates. Incomed data from device between metric reads", "gauge");
+  add<he::model::metrics::CMetricIncremental>(he::model::metrics::CMetricName::metricName("incoming_device_updates"), "Device updates. Incomed data from device between metric reads", "counter");
 }
 
 CMetrics::~CMetrics()
@@ -46,6 +46,12 @@ void CMetrics::increment(const std::string &name, const TMetricLabels &labels, c
 {
   if(!ensureMetricExists(name)) { return; }
   m_metrics[name]->increment(labels, value);
+}
+
+EMetricType CMetrics::type(const std::string &name)
+{
+  if(!ensureMetricExists(name)) { return EMetricType::mtUnknown; }
+  return m_metrics[name]->type();
 }
 
 bool CMetrics::empty(const std::string &name)
@@ -86,7 +92,7 @@ std::string CMetrics::list()
   {
     result += pair.second->info(pair.first);
   }
-  return result;
+  return result + "Total metrics: " + std::to_string(m_metrics.size());
 }
 
 bool CMetrics::ensureMetricExists(const std::string &name)

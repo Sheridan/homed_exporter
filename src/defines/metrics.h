@@ -1,6 +1,6 @@
 #pragma once
 #include <limits>
-#include "model/metrics/cmetricstatic.h"
+#include "model/metrics/cmetricvalue.h"
 
 // #define HE_HOMED_METRIC_PREFIX "homed_"
 // #define HE_HOMED_METRIC_NAME(_name) HE_HOMED_METRIC_PREFIX _name

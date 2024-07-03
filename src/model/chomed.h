@@ -5,8 +5,9 @@
 #include <mutex>
 
 #include "model/metrics/cmetricbulk.h"
-#include "model/metrics/cmetricincremental.h"
-#include "model/metrics/cmetricpartial.h"
+#include "model/metrics/types/cmetricincremental.h"
+#include "model/metrics/types/cmetricpartial.h"
+#include "model/metrics/types/cmetricstatic.h"
 #include "mqtt/ctopic.h"
 
 namespace he
@@ -16,6 +17,7 @@ namespace model
 
 typedef metrics::CMetricBulk<metrics::CMetricPartial> TMetricPartial;
 typedef metrics::CMetricBulk<metrics::CMetricIncremental> TMetricIncremental;
+typedef metrics::CMetricBulk<metrics::CMetricStatic> TMetricStatic;
 
 class CHomed
 {

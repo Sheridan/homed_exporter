@@ -5,8 +5,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_package(PahoMqttCpp REQUIRED)
 find_package(Boost 1.74 REQUIRED COMPONENTS system)
+find_package(PahoMqttCpp REQUIRED)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSONCPP REQUIRED jsoncpp)
@@ -25,34 +25,34 @@ endif (CMAKE_BUILD_TYPE STREQUAL Debug)
 set(HE_HEADERS
   src/configuration/ccmdoptions.h
   src/configuration/cconfiguration.h
+  src/defines/class_helpers.h
   src/defines/metrics.h
   src/http/chttp.h
   src/http/types.h
+  src/log.h
   src/main.h
   src/model/chomed.h
-  src/model/metrics/cmetricstatic.h
+  src/model/device/cdevice.h
+  src/model/device/cdevices.h
+  src/model/device/types.h
   src/model/metrics/cmetricbulk.h
-  src/model/metrics/cmetricincremental.h
-  src/model/metrics/cmetricpartial.h
+  src/model/metrics/cmetricname.h
+  src/model/metrics/cmetrics.h
+  src/model/metrics/cmetricvalue.h
+  src/model/metrics/types/cmetric.h
+  src/model/metrics/types/cmetricincremental.h
+  src/model/metrics/types/cmetricpartial.h
+  src/model/metrics/types/cmetricstatic.h
+  src/mqtt/cdevicename.h
   src/mqtt/cmqttcallback.h
   src/mqtt/cmqttclient.h
   src/mqtt/cpayload.h
+  src/mqtt/ctopic.h
   src/st.h
-  src/log.h
   src/tools/singletone/csingletone.h
   src/tools/singletone/singletone.h
-  src/mqtt/cdevicename.h
-  src/model/device/cdevices.h
-  src/model/device/cdevice.h
   src/utils/datetime.h
-  src/model/metrics/cmetricvalue.h
-  src/model/device/types.h
   src/utils/string.h
-  src/mqtt/ctopic.h
-  src/defines/class_helpers.h
-  src/model/metrics/cmetrics.h
-  src/model/metrics/cmetric.h
-  src/model/metrics/cmetricname.h
   )
 
 set(HE_SOURCES
@@ -61,25 +61,25 @@ set(HE_SOURCES
   src/http/chttp.cpp
   src/main.cpp
   src/model/chomed.cpp
-  src/model/metrics/cmetricstatic.cpp
+  src/model/device/cdevice.cpp
+  src/model/device/cdevices.cpp
+  src/model/device/types.cpp
   src/model/metrics/cmetricbulk.cpp
-  src/model/metrics/cmetricincremental.cpp
-  src/model/metrics/cmetricpartial.cpp
+  src/model/metrics/cmetricname.cpp
+  src/model/metrics/cmetrics.cpp
+  src/model/metrics/cmetricvalue.cpp
+  src/model/metrics/types/cmetric.cpp
+  src/model/metrics/types/cmetricincremental.cpp
+  src/model/metrics/types/cmetricpartial.cpp
+  src/model/metrics/types/cmetricstatic.cpp
+  src/mqtt/cdevicename.cpp
   src/mqtt/cmqttcallback.cpp
   src/mqtt/cmqttclient.cpp
   src/mqtt/cpayload.cpp
-  src/tools/singletone/csingletone.cpp
-  src/mqtt/cdevicename.cpp
-  src/model/device/cdevices.cpp
-  src/model/device/cdevice.cpp
-  src/utils/datetime.cpp
-  src/model/metrics/cmetricvalue.cpp
-  src/model/device/types.cpp
-  src/utils/string.cpp
   src/mqtt/ctopic.cpp
-  src/model/metrics/cmetrics.cpp
-  src/model/metrics/cmetric.cpp
-  src/model/metrics/cmetricname.cpp
+  src/tools/singletone/csingletone.cpp
+  src/utils/datetime.cpp
+  src/utils/string.cpp
   )
 
 include_directories(src)

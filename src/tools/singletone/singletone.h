@@ -5,6 +5,8 @@
 #define HE_STN_DEFINITION_TMPL(_type,_name) \
     public: _type &_name()
 
+// HE_LOG_DBG(#_type ": " << &value);
+
 #define HE_STN_DECLARATION_TMPL(_type) \
     { \
         static _type value = _type(); \

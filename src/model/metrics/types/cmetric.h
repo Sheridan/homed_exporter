@@ -8,6 +8,13 @@ namespace model
 namespace metrics
 {
 
+enum EMetricType
+{
+  mtStatic,
+  mtPartial,
+  mtIncremental,
+  mtUnknown
+};
 class CMetric
 {
 public:

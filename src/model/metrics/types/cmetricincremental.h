@@ -1,6 +1,6 @@
 #pragma once
-#include "model/metrics/cmetricstatic.h"
-#include <queue>
+#include "model/metrics/types/cmetric.h"
+
 namespace he
 {
 namespace model
@@ -8,20 +8,25 @@ namespace model
 namespace metrics
 {
 
-class CMetricPartial : public CMetric
+class CMetricIncremental : public CMetric
 {
 public:
-           CMetricPartial();
-  virtual ~CMetricPartial();
+  static constexpr EMetricType type() { return EMetricType::mtIncremental; }
+
+           CMetricIncremental();
+  virtual ~CMetricIncremental();
 
   void         set      (const CMetricValue &value) final;
   CMetricValue get      (                         ) final;
   bool         empty    (                         ) final;
   void         increment(const TMetricValue &value) final;
 
+
 private:
-  std::queue<CMetricValue> m_metric;
+  CMetricValue m_metric;
+  bool is_empty;
 };
+
 
 }
 }

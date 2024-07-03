@@ -1,5 +1,4 @@
-#include "model/metrics/cmetricpartial.h"
-#include "cmetricpartial.h"
+#include "model/metrics/types/cmetricpartial.h"
 
 namespace he
 {

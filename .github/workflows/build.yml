@@ -1,86 +1,86 @@
-# .github/workflows/build.yml
-name: Build and Package
+# # .github/workflows/build.yml
+# name: Build and Package
 
-on: [push, pull_request]
+# on: [push, pull_request]
 
-jobs:
-  build-and-package:
-    runs-on: ubuntu-latest
+# jobs:
+#   build-and-package:
+#     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        arch: [amd64, aarch64, armhf, mips]
+#     strategy:
+#       matrix:
+#         arch: [amd64, aarch64, armhf, mips]
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v2
 
-    - name: Setup QEMU
-      uses: docker/setup-qemu-action@v1
+#     - name: Setup QEMU
+#       uses: docker/setup-qemu-action@v1
 
-    - name: Setup Docker Buildx
-      uses: docker/setup-buildx-action@v1
+#     - name: Setup Docker Buildx
+#       uses: docker/setup-buildx-action@v1
 
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.cache
-          ~/vcpkg_installed
-        key: ${{ runner.os }}-build-cache-${{ hashFiles('**/CMakeLists.txt') }}
+#     - name: Cache dependencies
+#       uses: actions/cache@v2
+#       with:
+#         path: |
+#           ~/.cache
+#           ~/vcpkg_installed
+#         key: ${{ runner.os }}-build-cache-${{ hashFiles('**/CMakeLists.txt') }}
 
-    - name: Install Cross-Compilers
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          g++-aarch64-linux-gnu \
-          g++-arm-linux-gnueabihf \
-          g++-mips-linux-gnu \
-          gcc-11 g++-11
+#     - name: Install Cross-Compilers
+#       run: |
+#         sudo apt-get update
+#         sudo apt-get install -y \
+#           g++-aarch64-linux-gnu \
+#           g++-arm-linux-gnueabihf \
+#           g++-mips-linux-gnu \
+#           gcc-11 g++-11
 
-    - name: Install Dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          build-essential \
-          cmake \
-          libpaho-mqtt-dev \
-          libpaho-mqttpp-dev \
-          libboost-all-dev \
-          libjsoncpp-dev \
-          dpkg-dev \
-          ubuntu-dev-tools
+#     - name: Install Dependencies
+#       run: |
+#         sudo apt-get update
+#         sudo apt-get install -y \
+#           build-essential \
+#           cmake \
+#           libpaho-mqtt-dev \
+#           libpaho-mqttpp-dev \
+#           libboost-all-dev \
+#           libjsoncpp-dev \
+#           dpkg-dev \
+#           ubuntu-dev-tools
 
-    - name: Set Environment Variables
-      run: |
-        if [ "${{ matrix.arch }}" == "amd64" ]; then
-          export CC=gcc-11
-          export CXX=g++-11
-        elif [ "${{ matrix.arch }}" == "aarch64" ]; then
-          export CC=aarch64-linux-gnu-gcc
-          export CXX=aarch64-linux-gnu-g++
-        elif [ "${{ matrix.arch }}" == "armhf" ]; then
-          export CC=arm-linux-gnueabihf-gcc
-          export CXX=arm-linux-gnueabihf-g++
-        elif [ "${{ matrix.arch }}" == "mips" ]; then
-          export CC=mips-linux-gnu-gcc
-          export CXX=mips-linux-gnu-g++
-        fi
+#     - name: Set Environment Variables
+#       run: |
+#         if [ "${{ matrix.arch }}" == "amd64" ]; then
+#           export CC=gcc-11
+#           export CXX=g++-11
+#         elif [ "${{ matrix.arch }}" == "aarch64" ]; then
+#           export CC=aarch64-linux-gnu-gcc
+#           export CXX=aarch64-linux-gnu-g++
+#         elif [ "${{ matrix.arch }}" == "armhf" ]; then
+#           export CC=arm-linux-gnueabihf-gcc
+#           export CXX=arm-linux-gnueabihf-g++
+#         elif [ "${{ matrix.arch }}" == "mips" ]; then
+#           export CC=mips-linux-gnu-gcc
+#           export CXX=mips-linux-gnu-g++
+#         fi
 
-    - name: Configure and Build
-      run: |
-        mkdir build
-        cd build
-        cmake -DCMAKE_TOOLCHAIN_FILE=../toolchains/${{ matrix.arch }}-gcc.cmake ..
-        cmake --build . --config Release
+#     - name: Configure and Build
+#       run: |
+#         mkdir build
+#         cd build
+#         cmake -DCMAKE_TOOLCHAIN_FILE=../toolchains/${{ matrix.arch }}-gcc.cmake ..
+#         cmake --build . --config Release
 
-    - name: Package DEB
-      run: |
-        cd build
-        cpack -G DEB
+#     - name: Package DEB
+#       run: |
+#         cd build
+#         cpack -G DEB
 
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: homed_exporter-${{ matrix.arch }}
-        path: build/*.deb
+#     - name: Upload Artifacts
+#       uses: actions/upload-artifact@v2
+#       with:
+#         name: homed_exporter-${{ matrix.arch }}
+#         path: build/*.deb

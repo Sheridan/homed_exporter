@@ -1,4 +1,4 @@
-#include "model/metrics/cmetric.h"
+#include "model/metrics/types/cmetric.h"
 
 
 namespace he

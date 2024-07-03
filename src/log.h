@@ -1,4 +1,7 @@
 #pragma once
+#include <iostream>
+#include <cstdlib>
+#include <string>
 
 #define HE_LOG(_stream,_priority,_what) std::_stream << "["<< #_priority << "] " << _what << std::endl;
 #define HE_LOG_COUT(_priority,_what) HE_LOG(cout,_priority,_what)

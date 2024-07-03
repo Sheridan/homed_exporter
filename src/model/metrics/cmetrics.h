@@ -1,6 +1,7 @@
 #pragma once
 #include "model/metrics/cmetricbulk.h"
 #include "model/metrics/cmetricvalue.h"
+#include "log.h"
 #include <map>
 namespace he
 {
@@ -20,14 +21,16 @@ public:
   void add(const std::string &name, const std::string &help, const std::string &type)
   {
     if(ensureMetricExists(name)) { return; }
+    HE_LOG_NFO("Found new metric: " << name << ". Metric help: " << help);
     m_metrics[name] = new CMetricBulk<T>(help, type);
   }
 
-  void set      (const std::string &name, const TMetricLabels &labels, const CMetricValue &value);
-  void increment(const std::string &name, const TMetricLabels &labels, const TMetricValue &value = 1);
-  bool empty    (const std::string &name);
-  bool empty    ();
-  void clear    (const std::string &name);
+  void        set      (const std::string &name, const TMetricLabels &labels, const CMetricValue &value);
+  void        increment(const std::string &name, const TMetricLabels &labels, const TMetricValue &value = 1);
+  EMetricType type     (const std::string &name);
+  bool        empty    (const std::string &name);
+  bool        empty    (                       );
+  void        clear    (const std::string &name);
 
 
   std::string metrics();

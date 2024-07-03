@@ -129,7 +129,7 @@ std::string CMetricBulk<TMetricType>::metrics(const std::string &metricName)
       }
     }
   }
-  clear();
+  // clear();
   if(!result.empty())
   {
     // return std::format("# HELP {} {}\n# TYPE {} {}\n", metricName, m_help, metricName, m_type) + result;
@@ -174,8 +174,9 @@ const std::string &CMetricBulk<TMetricType>::labelValue(const TMetricLabels &lab
 }
 }
 
-#include "model/metrics/cmetricincremental.h"
-#include "model/metrics/cmetricpartial.h"
+#include "model/metrics/types/cmetricincremental.h"
+#include "model/metrics/types/cmetricpartial.h"
+#include "model/metrics/types/cmetricstatic.h"
 #include "cmetricbulk.h"
 
 namespace he
