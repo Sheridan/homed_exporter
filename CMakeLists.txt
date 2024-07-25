@@ -102,5 +102,12 @@ set(CPACK_PACKAGE_CONTACT "Gorlov Maxim <sheridan@babylo-five.ru>")
 set(CPACK_PACKAGE_DESCRIPTION "HomeD Exporter is a tool to export HOMEd Zigbee data metrics.")
 set(CPACK_PACKAGE_MAINTAINER "Gorlov Maxim <sheridan@babylo-five.ru>")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "libpaho-mqttpp3, libboost-system, libjsoncpp1")
+set(CPACK_DEBIAN_PACKAGE_USER "homed")
+set(CPACK_DEBIAN_PACKAGE_GROUP "homed")
+
+set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/deploy/debian/control.extra")
+set(CPACK_DEBIAN_PACKAGE_POST_INSTALL "${CMAKE_CURRENT_SOURCE_DIR}/deploy/debian//post_install.sh")
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/deploy/homed_exporter.service
+        DESTINATION /usr/share/homed_exporter)
 
 include(CPack)

@@ -1,0 +1,3 @@
+if ! id "homed" &>/dev/null; then
+  adduser --system --no-create-home --group homed
+fi

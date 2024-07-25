@@ -1,0 +1,16 @@
+[Unit]
+Description=HOMEd Exporter Service
+After=network.target
+
+[Service]
+Type=simple
+User=homed
+ExecStart=/usr/bin/homed_exporter
+StandardOutput=journal
+StandardError=journal
+RemainAfterExit=no
+RestartSec=8s
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
