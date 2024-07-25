@@ -22,6 +22,15 @@ if (CMAKE_BUILD_TYPE STREQUAL Debug)
   add_definitions(-DHE_DEBUG)
 endif (CMAKE_BUILD_TYPE STREQUAL Debug)
 
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/version.txt" PACKAGE_VERSION)
+string(STRIP "${PACKAGE_VERSION}" PACKAGE_VERSION)
+
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/version.h.in"
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/version.h"
+  @ONLY
+)
+
 set(HE_HEADERS
   src/configuration/ccmdoptions.h
   src/configuration/cconfiguration.h
@@ -94,10 +103,10 @@ target_link_libraries(homed_exporter
     ${Boost_LIBRARIES}
   )
 
-  install(TARGETS homed_exporter DESTINATION /usr/bin)
+install(TARGETS homed_exporter DESTINATION /usr/bin)
 
 set(CPACK_PACKAGE_NAME "homed_exporter")
-set(CPACK_PACKAGE_VERSION "0.8.0")
+set(CPACK_PACKAGE_VERSION "${PACKAGE_VERSION}")
 set(CPACK_PACKAGE_CONTACT "Gorlov Maxim <sheridan@babylo-five.ru>")
 set(CPACK_PACKAGE_DESCRIPTION "HomeD Exporter is a tool to export HOMEd Zigbee data metrics.")
 set(CPACK_PACKAGE_MAINTAINER "Gorlov Maxim <sheridan@babylo-five.ru>")

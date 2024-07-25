@@ -2,7 +2,7 @@
 #include <iostream>
 #include "st.h"
 
-static const std::string_view version = "0.8.0";
+#include "version.h"
 
 int main(int argc, char* argv[])
 {

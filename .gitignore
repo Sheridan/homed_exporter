@@ -3,3 +3,5 @@ build
 trash
 homed-exporter.json
 z_*.json
+
+src/version.h
