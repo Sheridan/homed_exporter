@@ -32,7 +32,16 @@ jobs:
             -w /workspace \
             gcc:10 \
             bash -c "
-              apt-get update && apt-get install -y cmake pkg-config libboost-system-dev libjsoncpp-dev libpaho-mqttpp3-dev
+              apt-get update && apt-get install -y \
+                                cmake \
+                                pkg-config \
+                                build-essential \
+                                libpaho-mqtt-dev \
+                                libpaho-mqttpp-dev \
+                                libboost-all-dev \
+                                libjsoncpp-dev \
+                                dpkg-dev \
+                                ubuntu-dev-tools
               mkdir build && cd build
               cmake -DCMAKE_BUILD_TYPE=Release ..
               make
