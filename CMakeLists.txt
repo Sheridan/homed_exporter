@@ -107,7 +107,7 @@ install(TARGETS homed_exporter
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/deploy/homed_exporter.service
         DESTINATION /usr/share/homed_exporter)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/homed-exporter.example.json
-        DESTINATION /usr/share/homed-exporter.example.json)
+        DESTINATION /usr/share/homed-exporter)
 
 message("Arch is " ${CMAKE_SYSTEM_PROCESSOR})
 
@@ -116,7 +116,7 @@ set(CPACK_PACKAGE_VERSION "${PACKAGE_VERSION}")
 set(CPACK_PACKAGE_CONTACT "Gorlov Maxim <sheridan@babylon-five.ru>")
 set(CPACK_PACKAGE_DESCRIPTION "HOMEd Exporter is a tool to export HOMEd Zigbee data metrics.")
 set(CPACK_PACKAGE_MAINTAINER "Gorlov Maxim <sheridan@babylon-five.ru>")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libpaho-mqttpp3-1, libboost-system1.81.0, libjsoncpp25")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libpaho-mqttpp3-1, libboost-system1.74.0, libjsoncpp25")
 set(CPACK_DEBIAN_PACKAGE_USER "homed")
 set(CPACK_DEBIAN_PACKAGE_GROUP "homed")
 set(CPACK_DEBIAN_FILE_NAME "${CPACK_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}_${CMAKE_SYSTEM_PROCESSOR}.deb")
