@@ -10,7 +10,6 @@ find_package(PahoMqttCpp REQUIRED)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSONCPP REQUIRED jsoncpp)
-# pkg_check_modules(PahoMqttCpp REQUIRED paho-mqttpp)
 
 option(CMAKE_BUILD_TYPE "Build type" Release)
 
@@ -103,22 +102,24 @@ target_link_libraries(homed_exporter
     ${Boost_LIBRARIES}
   )
 
-install(TARGETS homed_exporter DESTINATION /usr/bin)
+install(TARGETS homed_exporter
+        DESTINATION /usr/bin)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/deploy/homed_exporter.service
+        DESTINATION /usr/share/homed_exporter)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/homed-exporter.example.json
+        DESTINATION /usr/share/homed-exporter.example.json)
 
 message("Arch is " ${CMAKE_SYSTEM_PROCESSOR})
 
 set(CPACK_PACKAGE_NAME "homed_exporter")
 set(CPACK_PACKAGE_VERSION "${PACKAGE_VERSION}")
-set(CPACK_PACKAGE_CONTACT "Gorlov Maxim <sheridan@babylo-five.ru>")
+set(CPACK_PACKAGE_CONTACT "Gorlov Maxim <sheridan@babylon-five.ru>")
 set(CPACK_PACKAGE_DESCRIPTION "HOMEd Exporter is a tool to export HOMEd Zigbee data metrics.")
 set(CPACK_PACKAGE_MAINTAINER "Gorlov Maxim <sheridan@babylon-five.ru>")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libpaho-mqttpp3, libboost-system, libjsoncpp1")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libpaho-mqttpp3-1, libboost-system1.81.0, libjsoncpp25")
 set(CPACK_DEBIAN_PACKAGE_USER "homed")
 set(CPACK_DEBIAN_PACKAGE_GROUP "homed")
 set(CPACK_DEBIAN_FILE_NAME "${CPACK_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}_${CMAKE_SYSTEM_PROCESSOR}.deb")
 set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/deploy/debian/control.extra")
 set(CPACK_DEBIAN_PACKAGE_POST_INSTALL "${CMAKE_CURRENT_SOURCE_DIR}/deploy/debian//post_install.sh")
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/deploy/homed_exporter.service
-        DESTINATION /usr/share/homed_exporter)
-
 include(CPack)
