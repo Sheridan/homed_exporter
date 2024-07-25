@@ -50,13 +50,13 @@ jobs:
         id: upload_package
         uses: actions/upload-artifact@v2
         with:
-          name: homed_exporter_${{ github.sha }}_${{ matrix.arch }}.deb
-          path: build/*.deb
+          name: homed_exporter_${{ github.event.release.tag_name }}_${{ matrix.arch }}.deb
+          path: build/homed_exporter_${{ github.event.release.tag_name }}_${{ matrix.arch }}.deb
 
       - name: Upload release asset
         uses: softprops/action-gh-release@v1
         with:
           tag: ${{ github.event.release.tag_name }}
-          files: build/*.deb
+          files: build/homed_exporter_${{ github.event.release.tag_name }}_${{ matrix.arch }}.deb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
