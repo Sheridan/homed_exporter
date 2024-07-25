@@ -34,7 +34,7 @@ jobs:
             -w /workspace \
             gcc:11-bullseye  \
             bash -c "
-              apt-get update && apt-search libpaho && apt-get install -y \
+              apt-get update && apt-get install -y \
                                 cmake \
                                 pkg-config \
                                 build-essential \
