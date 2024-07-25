@@ -105,6 +105,8 @@ target_link_libraries(homed_exporter
 
 install(TARGETS homed_exporter DESTINATION /usr/bin)
 
+message("Arch is " ${CMAKE_SYSTEM_PROCESSOR})
+
 set(CPACK_PACKAGE_NAME "homed_exporter")
 set(CPACK_PACKAGE_VERSION "${PACKAGE_VERSION}")
 set(CPACK_PACKAGE_CONTACT "Gorlov Maxim <sheridan@babylo-five.ru>")

@@ -7,6 +7,7 @@ release: subdir=release
 release: mkpath
 	cd ${BUILD_DIR}/${subdir} && cmake -DCMAKE_BUILD_TYPE=Release ../..
 	cd ${BUILD_DIR}/${subdir} && make -j`lscpu | grep "CPU(s)" | head -n1 | awk '{ print $$2 }'`
+	cd ${BUILD_DIR}/${subdir} && cpack -G DEB
 
 debug: subdir=debug
 debug: mkpath

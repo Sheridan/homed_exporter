@@ -57,6 +57,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.event.release.tag_name }}
-          files: build/homed_exporter_${{ github.event.release.tag_name }}_${{ matrix.arch }}.deb
+          files: build/*.deb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
