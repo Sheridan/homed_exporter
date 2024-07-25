@@ -42,16 +42,16 @@ jobs:
                                 libpaho-mqttpp-dev \
                                 libboost-all-dev \
                                 libjsoncpp-dev \
-                                dpkg-dev
+                                dpkg-dev \
+                                debhelper
               mkdir build && cd build
               cmake -DCMAKE_BUILD_TYPE=Release ..
               make
-              make install DESTDIR=package
-              cd package && dpkg-deb --build . ../homed_exporter_${{ github.sha }}_${{ matrix.arch }}.deb
+              cpack -G DEB
             "
 
       - name: Upload Debian package
         uses: actions/upload-artifact@v2
         with:
           name: homed_exporter_${{ github.sha }}_${{ matrix.arch }}.deb
-          path: homed_exporter_${{ github.sha }}_${{ matrix.arch }}.deb
+          path: build/*.deb
