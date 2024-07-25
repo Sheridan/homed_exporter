@@ -40,23 +40,21 @@ jobs:
                                 libjsoncpp-dev \
                                 dpkg-dev \
                                 debhelper
-              mkdir build && cd build
-              cmake -DCMAKE_BUILD_TYPE=Release ..
-              make
-              cpack -G DEB
+              mkdir .build
+              make release
             "
 
-      - name: Upload Debian package
-        id: upload_package
-        uses: actions/upload-artifact@v2
-        with:
-          name: homed_exporter_${{ github.event.release.tag_name }}_${{ matrix.arch }}.deb
-          path: build/homed_exporter_${{ github.event.release.tag_name }}_${{ matrix.arch }}.deb
+      # - name: Upload Debian package
+      #   id: upload_package
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: homed_exporter_${{ github.event.release.tag_name }}_${{ matrix.arch }}.deb
+      #     path: .build/release/homed_exporter_${{ github.event.release.tag_name }}_${{ matrix.arch }}.deb
 
       - name: Upload release asset
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.event.release.tag_name }}
-          files: build/*.deb
+          files: .build/release/*.deb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
