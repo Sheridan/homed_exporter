@@ -21,8 +21,7 @@ if (CMAKE_BUILD_TYPE STREQUAL Debug)
   add_definitions(-DHE_DEBUG)
 endif (CMAKE_BUILD_TYPE STREQUAL Debug)
 
-file(READ "${CMAKE_CURRENT_SOURCE_DIR}/version.txt" PACKAGE_VERSION)
-string(STRIP "${PACKAGE_VERSION}" PACKAGE_VERSION)
+set(PACKAGE_VERSION "0.8.3")
 
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/src/version.h.in"
