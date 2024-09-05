@@ -18,3 +18,9 @@ clean:
 	-rm -rf ${BUILD_DIR}/debug
 	-rm -rf ${BUILD_DIR}/release
 	-rm -rf log
+
+run_debug: debug
+	reset && rm -f debug.log && ${BUILD_DIR}/debug/homed_exporter -c ./homed-exporter.json --verbose
+
+run_release: release
+	reset && rm -f release.log && ${BUILD_DIR}/release/homed_exporter -c ./homed-exporter.json --verbose

@@ -1,10 +1,7 @@
 #include "mqtt/ctopic.h"
-#include "st.h"
-
 #include <sstream>
 #include <iostream>
-#include "ctopic.h"
-// #include <tuple>
+#include "st.h"
 
 namespace he
 {
@@ -15,6 +12,7 @@ CTopic::CTopic(const std::string &topic)
   : m_root(HE_ST.config().mqttHomedTopic()),
     m_topic(""),
     m_service(""),
+    m_instance(""),
     m_device(""),
     m_deviceEndpoint("")
 {
@@ -33,8 +31,14 @@ void CTopic::parseTopic(const std::string &topic)
   std::getline(stream, root            , '/');
   std::getline(stream, m_topic         , '/');
   std::getline(stream, m_service       , '/');
+  if(m_service == "zigbee")
+  {
+    std::getline(stream, m_instance    , '/');
+  }
   std::getline(stream, m_device        , '/');
   std::getline(stream, m_deviceEndpoint, '/');
+
+  HE_LOG_DBG(root << " | " << m_topic << " | " << m_service << " | " << m_instance << " | " << m_device << " | " << m_deviceEndpoint);
 }
 
 ETopic CTopic::mineTopicType()

@@ -1,5 +1,4 @@
 #include "model/device/cdevice.h"
-#include "cdevice.h"
 #include "st.h"
 #include "model/metrics/cmetricname.h"
 #include "defines/metrics.h"
@@ -120,7 +119,7 @@ void CDevice::updateStatus(const he::mqtt::CTopic *topic, const Json::Value &dat
 void CDevice::updateExpose(const he::mqtt::CTopic *topic, const Json::Value &data)
 {
   HE_LOG_VERBOSE("Updating device " << m_name << " expose");
-  // HE_LOG_DBG(data.toStyledString());
+  HE_LOG_DBG("Expose: " << data.toStyledString());
   for(const std::string &key : data.getMemberNames())
   {
     HE_LOG_DBG("Expose key: " << key);
@@ -210,6 +209,7 @@ void CDevice::updateFd(const he::mqtt::CTopic *topic, const Json::Value &data)
 
 void CDevice::updateMain(const he::mqtt::CTopic *topic, const Json::Value &data, const std::vector<std::string> &keys)
 {
+  // HE_LOG_DBG("json: " << data.toStyledString());
   HE_LOG_VERBOSE("Updating device " << m_name << " " << topic->topic());
   for(const std::string &key : keys)
   {
@@ -217,7 +217,8 @@ void CDevice::updateMain(const he::mqtt::CTopic *topic, const Json::Value &data,
     if(data[key].isObject() || data[key].isArray()) { continue; }
     HE_LOG_DBG(topic->topic() << " key: " << key);
     he::model::metrics::TMetricLabels labels = defaultLabels();
-    if(!topic->deviceEndpoint().empty()) { labels["endpoint"] = topic->deviceEndpoint(); }
+    if(!topic->deviceEndpoint().empty()) { labels["endpoint"      ] = topic->deviceEndpoint(); }
+    if(!topic->instance      ().empty()) { labels["homed_instance"] = topic->instance      (); }
     he::model::metrics::CMetricValue value = HE_ST.metrics().isExposeEnumeration(key) ?  he::model::metrics::CMetricValue(HE_ST.metrics().exposeEnumerationIndex(key, data[key].asString())) :  he::model::metrics::CMetricValue(data[key]);
     std::string metricName = he::model::metrics::CMetricName::metricName(key, topic->topicType());
     switch(HE_ST.metrics().type(metricName))

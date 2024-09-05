@@ -11,4 +11,4 @@
 
 #include "log.h"
 
-#define HE_LOG_VERBOSE(_what) if(HE_ST.cmdLine().option<bool>("verbose")) { HE_LOG_NFO(_what) }
+#define HE_LOG_VERBOSE(_what) if(HE_ST.cmdLine().option<bool>("verbose")) { HE_LOG(cout,verbose,_what) }

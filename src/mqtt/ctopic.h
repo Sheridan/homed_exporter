@@ -40,6 +40,7 @@ public:
   HE_SIMPLE_GETTER(std::string, root          );
   HE_SIMPLE_GETTER(std::string, topic         );
   HE_SIMPLE_GETTER(std::string, service       );
+  HE_SIMPLE_GETTER(std::string, instance      );
   HE_SIMPLE_GETTER(std::string, device        );
   HE_SIMPLE_GETTER(std::string, deviceEndpoint);
 
@@ -47,6 +48,7 @@ private:
   std::string m_root;
   std::string m_topic;
   std::string m_service;
+  std::string m_instance;
   std::string m_device;
   std::string m_deviceEndpoint;
   ETopic m_topicType;

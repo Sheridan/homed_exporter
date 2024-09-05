@@ -29,6 +29,7 @@ void CDevices::update(const he::mqtt::CTopic *topic, const Json::Value &data)
       for(const Json::Value &device : data)
       {
         std::string name = device["name"].asString();
+        HE_LOG_DBG("First device update: " << name);
         if(mustIgnore(name)) { continue; }
         if(!exists(name))
         {
@@ -42,6 +43,7 @@ void CDevices::update(const he::mqtt::CTopic *topic, const Json::Value &data)
     case he::mqtt::ETopic::tDevice:
     {
       if(topic->device().empty() || mustIgnore(topic->device(), topic->deviceEndpoint()) || !exists(topic->device())) { return; }
+      // HE_LOG_DBG("Can update")
       get(topic->device())->update(topic, data);
     } break;
   }

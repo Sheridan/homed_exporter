@@ -27,7 +27,7 @@ bool CPayload::parse(const std::string& payload)
     HE_LOG_WRN("MQTT payload parse error: " << err);
     return false;
   }
-  // HE_LOG_DBG(m_root.toStyledString());
+  HE_LOG_DBG(m_root.toStyledString());
   return true;
 }
 
