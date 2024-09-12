@@ -205,7 +205,9 @@ void CDevice::updateExpose(const he::mqtt::CTopic *topic, const Json::Value &dat
 
 void CDevice::updateFd(const he::mqtt::CTopic *topic, const Json::Value &data)
 {
-  HE_ST.metrics().increment(he::model::metrics::CMetricName::metricName("incoming_device_updates"), defaultLabels());
+  he::model::metrics::TMetricLabels labels = defaultLabels();
+  if(!topic->instance().empty()) { labels["homed_instance"] = topic->instance(); }
+  HE_ST.metrics().increment(he::model::metrics::CMetricName::metricName("incoming_device_updates"), labels);
   updateMain(topic, data, data.getMemberNames());
 }
 
