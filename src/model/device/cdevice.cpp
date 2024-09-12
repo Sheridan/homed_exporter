@@ -85,6 +85,7 @@ void CDevice::updateStatus(const he::mqtt::CTopic *topic, const Json::Value &dat
               HE_P_LABELS
               (
                 HE_P_LABEL (name             ,m_name                          ),
+                HE_P_LABEL (homed_instance   ,topic->instance()               ),
                 HE_P_LABEL (network_address  ,std::to_string(m_networkAddress)),
                 HE_P_JLABEL(firmware         ,data, firmware                  ),
                 HE_P_JLABEL(manufacturer_code,data, manufacturerCode          ),
@@ -108,7 +109,8 @@ void CDevice::updateStatus(const he::mqtt::CTopic *topic, const Json::Value &dat
                                 HE_P_LABEL(from_network_address,std::to_string(m_networkAddress)           ),
                                 HE_P_LABEL(to_network_address  ,std::to_string(toDev->networkAddress())    ),
                                 HE_P_LABEL(from_role           ,he::model::device::to_string(m_role)       ),
-                                HE_P_LABEL(to_role             ,he::model::device::to_string(toDev->role()))
+                                HE_P_LABEL(to_role             ,he::model::device::to_string(toDev->role())),
+                                HE_P_LABEL(homed_instance      ,topic->instance()                          )
                               ),
                               he::model::metrics::CMetricValue(neighbor["linkQuality"]));
       }
